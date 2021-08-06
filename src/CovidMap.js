@@ -98,12 +98,12 @@ function CovidView({ covidData, onAreaClick }) {
   );
 }
 
-function CovidInfo({ area, todayNum, level }) {
+function CovidInfo({ area,date, todayNum, level }) {
   return (
     <div>
       {area !== "" && (
         <>
-          <h2>오늘 {area} 코로나 정보</h2>
+          <h2>{area} 코로나 정보 ({date} 기준)</h2>
           <p>거리두기 단계 : {level}</p>
           <p>확진자 수 : {todayNum}</p>
         </>
@@ -114,24 +114,41 @@ function CovidInfo({ area, todayNum, level }) {
 
 function CovidMap() {
   const [covidData, setCovidData] = useState(null);
+  const [updatedDate,setUpdatedDate] = useState('');
   const [selectArea, setSelectArea] = useState({
     area: "",
     level: 0,
-    todayNum: 0,
   });
 
   useEffect(() => {
     console.log(covidData);
   }, [covidData]);
 
-  useEffect(() => {
+  const fetchData = () => {
     axios.post("http://localhost:5000/covidData").then((response) => {
       if (response.data) {
-        const { data } = response.data;
+        const { data,updated_date } = response.data;
         setCovidData(data);
+        setUpdatedDate((ori) => updated_date);
       }
     });
+  }
+
+  useEffect(() => {
+    fetchData();
   }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      fetchData();
+      console.log("갱신 완료.");
+    }, 5000);
+
+    return () => {
+      clearInterval(timer);
+    }
+  })
+  
 
   const handlerAreaSelect = (area) => {
     setSelectArea({
@@ -150,6 +167,7 @@ function CovidMap() {
         <>
           <CovidInfo
             area={selectArea.area}
+            date={updatedDate}
             todayNum={selectArea.todayNum}
             level={selectArea.level}
           />

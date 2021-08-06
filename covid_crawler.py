@@ -65,7 +65,7 @@ def getTodayCovid():
 
             result = {
                 'status': 'success',
-                'updated_data': updated_date,
+                'updated_date': updated_date,
                 'data': dict()
             }
 
@@ -79,6 +79,6 @@ def getTodayCovid():
 
     return {
         'status': 'fail',
-        'updated_data': None,
+        'updated_date': None,
         'data': None
     }
