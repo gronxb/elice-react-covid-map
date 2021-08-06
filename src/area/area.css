@@ -1,0 +1,8 @@
+.area {
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.area:hover {
+    opacity: 0.8;
+}

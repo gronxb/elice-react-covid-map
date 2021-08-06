@@ -1,9 +1,11 @@
 import React from "react";
+import "./area.css";
 
 function Jeonbuk({ fill, onClick, onMouseOver, onMouseLeave }) {
   return (
     <polyline
       id="전북"
+      className="area"
       onClick={onClick}
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}

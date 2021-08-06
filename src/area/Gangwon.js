@@ -1,9 +1,11 @@
 import React from "react";
+import "./area.css";
 
 function Gangwon({ fill, onClick, onMouseOver, onMouseLeave }) {
   return (
     <polyline
       id="강원"
+      className="area"
       onClick={onClick}
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}

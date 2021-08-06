@@ -1,9 +1,11 @@
 import React from "react";
+import "./area.css";
 
 function Daejeon({ fill, onClick, onMouseOver, onMouseLeave }) {
   return (
     <polyline
       id="대전"
+      className="area"
       onClick={onClick}
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}

@@ -1,9 +1,11 @@
 import React from "react";
+import "./area.css";
 
 function Busan({ fill, onClick, onMouseOver, onMouseLeave }) {
   return (
     <polyline
       id="부산"
+      className="area"
       onClick={onClick}
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}

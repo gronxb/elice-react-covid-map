@@ -1,9 +1,11 @@
 import React from "react";
+import "./area.css";
 
 function Chungnam({ fill, onClick, onMouseOver, onMouseLeave }) {
   return (
     <polyline
       id="충남"
+      className="area"
       onClick={onClick}
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
