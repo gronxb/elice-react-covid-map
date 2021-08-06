@@ -1,6 +1,10 @@
 # Elice 코로나 맵 실습
+## Preview
+![Preview](https://github.com/gron1gh1/elice-react-covid-map/blob/master/preview.gif)
+
 ## Usage
 ```sh
+> pip install -r requirements.txt
 > python app.py
 > yarn start
 ```

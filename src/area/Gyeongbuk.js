@@ -13,7 +13,7 @@ function Gyeongbuk({ fill, onClick, onMouseOver, onMouseLeave }) {
       style={{
         fill: fill === undefined ? "#cdcccc" : fill,
         fillOpacity: 1,
-        stroke: "gray",
+        stroke: "white",
         strokeMiterlimit: "1",
       }}
     />
