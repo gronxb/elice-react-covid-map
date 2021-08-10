@@ -61,11 +61,11 @@ def getTodayCovid():
         if response.status_code == 200:
             html = response.text
             soup = BeautifulSoup(html, 'html.parser')
-            updated_date = soup.select_one('#content > div > div.timetable > p > span').text
+            updated_data = soup.select_one('#content > div > div.timetable > p > span').text
 
             result = {
                 'status': 'success',
-                'updated_date': updated_date,
+                'updated_data': updated_data,
                 'data': dict()
             }
 
@@ -79,6 +79,6 @@ def getTodayCovid():
 
     return {
         'status': 'fail',
-        'updated_date': None,
+        'updated_data': None,
         'data': None
     }

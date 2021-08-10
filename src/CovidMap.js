@@ -28,71 +28,71 @@ function CovidView({ covidData, onAreaClick }) {
     <svg width="700px" height="1000px" viewBox="0 0 800 1200">
       <Seoul
         fill={fillColor[covidData["서울"]["level"] - 1]}
-        onClick={() => onAreaClick("서울")}
+        onClick={(e) => onAreaClick(e.target.id)}
       />
       <Gyeonggi
         fill={fillColor[covidData["경기"]["level"] - 1]}
-        onClick={() => onAreaClick("경기")}
+        onClick={(e) => onAreaClick(e.target.id)}
       />
       <Gangwon
         fill={fillColor[covidData["강원"]["level"] - 1]}
-        onClick={() => onAreaClick("강원")}
+        onClick={(e) => onAreaClick(e.target.id)}
       />
       <Incheon
         fill={fillColor[covidData["인천"]["level"] - 1]}
-        onClick={() => onAreaClick("인천")}
+        onClick={(e) => onAreaClick(e.target.id)}
       />
       <Chungnam
         fill={fillColor[covidData["충남"]["level"] - 1]}
-        onClick={() => onAreaClick("충남")}
+        onClick={(e) => onAreaClick(e.target.id)}
       />
       <Chungbuk
         fill={fillColor[covidData["충북"]["level"] - 1]}
-        onClick={() => onAreaClick("충북")}
+        onClick={(e) => onAreaClick(e.target.id)}
       />
       <Sejong
         fill={fillColor[covidData["세종"]["level"] - 1]}
-        onClick={() => onAreaClick("세종")}
+        onClick={(e) => onAreaClick(e.target.id)}
       />
       <Daejeon
         fill={fillColor[covidData["대전"]["level"] - 1]}
-        onClick={() => onAreaClick("대전")}
+        onClick={(e) => onAreaClick(e.target.id)}
       />
       <Gyeongnam
         fill={fillColor[covidData["경남"]["level"] - 1]}
-        onClick={() => onAreaClick("경남")}
+        onClick={(e) => onAreaClick(e.target.id)}
       />
       <Gyeongbuk
         fill={fillColor[covidData["경북"]["level"] - 1]}
-        onClick={() => onAreaClick("경북")}
+        onClick={(e) => onAreaClick(e.target.id)}
       />
       <Jeonbuk
         fill={fillColor[covidData["전북"]["level"] - 1]}
-        onClick={() => onAreaClick("전북")}
+        onClick={(e) => onAreaClick(e.target.id)}
       />
       <Jeonnam
         fill={fillColor[covidData["전남"]["level"] - 1]}
-        onClick={() => onAreaClick("전남")}
+        onClick={(e) => onAreaClick(e.target.id)}
       />
       <Ulsan
         fill={fillColor[covidData["울산"]["level"] - 1]}
-        onClick={() => onAreaClick("울산")}
+        onClick={(e) => onAreaClick(e.target.id)}
       />
       <Busan
         fill={fillColor[covidData["부산"]["level"] - 1]}
-        onClick={() => onAreaClick("부산")}
+        onClick={(e) => onAreaClick(e.target.id)}
       />
       <Daegu
         fill={fillColor[covidData["대구"]["level"] - 1]}
-        onClick={() => onAreaClick("대구")}
+        onClick={(e) => onAreaClick(e.target.id)}
       />
       <Gwangju
         fill={fillColor[covidData["광주"]["level"] - 1]}
-        onClick={() => onAreaClick("광주")}
+        onClick={(e) => onAreaClick(e.target.id)}
       />
       <Jeju
         fill={fillColor[covidData["제주"]["level"] - 1]}
-        onClick={() => onAreaClick("제주")}
+        onClick={(e) => onAreaClick(e.target.id)}
       />
     </svg>
   );
@@ -127,9 +127,7 @@ function CovidMap() {
   const fetchData = () => {
     axios.post("http://localhost:5000/covidData").then((response) => {
       if (response.data) {
-        const { data,updated_date } = response.data;
-        setCovidData(data);
-        setUpdatedDate((ori) => updated_date);
+        setCovidData(response.data);
       }
     });
   }
@@ -153,8 +151,8 @@ function CovidMap() {
   const handlerAreaSelect = (area) => {
     setSelectArea({
       area: area,
-      level: covidData[area]["level"],
-      todayNum: covidData[area]["num"],
+      level: covidData.data[area]["level"],
+      todayNum: covidData.data[area]["num"],
     });
   };
 
@@ -167,11 +165,11 @@ function CovidMap() {
         <>
           <CovidInfo
             area={selectArea.area}
-            date={updatedDate}
+            date={covidData.updated_data}
             todayNum={selectArea.todayNum}
             level={selectArea.level}
           />
-          <CovidView covidData={covidData} onAreaClick={handlerAreaSelect} />
+          <CovidView covidData={covidData.data} onAreaClick={handlerAreaSelect} />
         </>
       )}
     </div>
