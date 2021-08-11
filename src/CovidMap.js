@@ -21,10 +21,9 @@ import {
 import axios from "axios";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import {changeTheme} from "./redux/action";
+import { changeTheme } from "./redux/action";
 
-import {Button} from "react-bootstrap";
-
+import { Button } from "react-bootstrap";
 
 // 코로나 단계별 색상
 const fillColor = ["#4088da", "#ffb911", "#fc7001", "#e60000"];
@@ -111,14 +110,16 @@ const StyleBox = styled.div`
   padding: 10px;
 `;
 
-function CovidInfo({ area,date, todayNum, level }) {
+function CovidInfo({ area, date, todayNum, level }) {
   const theme = useSelector((state) => state.theme);
 
   return (
-    <StyleBox style={{background: theme === "light" ? "white" : "darkgrey"}}>
+    <StyleBox style={{ background: theme === "light" ? "white" : "darkgrey" }}>
       {area !== "" && (
         <>
-          <h2>{area} 코로나 정보 ({date} 기준)</h2>
+          <h2>
+            {area} 코로나 정보 ({date} 기준)
+          </h2>
           <p>거리두기 단계 : {level}</p>
           <p>확진자 수 : {todayNum}</p>
         </>
@@ -143,32 +144,38 @@ function CovidMap() {
     area: "",
     level: 0,
   });
-  const [allNum,setAllNum] = useState(0); 
+  const [allNum, setAllNum] = useState(0);
 
   useEffect(() => {
-    if(covidData) {
-    console.log("covidData", covidData.data);
+    // covidData가 업데이트 될 때마다 실행되는 함수
 
-    const data = covidData.data;
+    if (covidData !== null) { // 처음 covidData가 null이기 때문에 if로 확인
+      console.log("covidData", covidData.data); 
 
-    const numArr = Object.keys(data).map(key => {
-      return data[key].num
-    })
+      const data = covidData.data;
 
-    const allNums = numArr.reduce((a,b) => a + b);
+      // Object.keys(객체) 배열로 키 값이 들어옴.
+      // 해당 키 배열로 map 반복하면서 지역별 확진자 수 num만 뽑아옴
+      const numArr = Object.keys(data).map((key) => {
+        return data[key].num;
+      });
 
-    setAllNum(allNums);
-  }
+      // 뽑아온 지역별 확진자 수 배열을 reduce로 총합을 만들어줌
+      const allNums = numArr.reduce((a, b) => a + b);
+
+      // 총 확진자 수 state 적용
+      setAllNum(allNums);
+    }
   }, [covidData]);
 
   const fetchData = async () => {
-    let response = await axios.post("http://localhost:5000/covidData")
+    let response = await axios.post("http://localhost:5000/covidData");
     setCovidData(response.data);
-  }
+  };
 
   useEffect(() => {
     fetchData();
-  }, []);  
+  }, []);
 
   const handlerAreaSelect = (area) => {
     setSelectArea({
@@ -179,20 +186,23 @@ function CovidMap() {
   };
 
   return (
-    <StyleMap style={{background: theme === "light" ? "white" : "grey"}}>
+    <StyleMap style={{ background: theme === "light" ? "white" : "grey" }}>
       <h1>대한민국 코로나 현황</h1>
       {covidData === null ? (
         <p>Loading...</p>
       ) : (
         <>
-        <p>총 확진자 수 : {allNum}</p>
+          <p>총 확진자 수 : {allNum}</p>
           <CovidInfo
             area={selectArea.area}
             date={covidData.updated_data}
             todayNum={selectArea.todayNum}
             level={selectArea.level}
           />
-          <CovidView covidData={covidData.data} onAreaClick={handlerAreaSelect} />
+          <CovidView
+            covidData={covidData.data}
+            onAreaClick={handlerAreaSelect}
+          />
         </>
       )}
     </StyleMap>

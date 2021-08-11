@@ -22,8 +22,12 @@ function Header({history}) {
     <Container>
     <Navbar.Brand href="#home">엘리스 코로나</Navbar.Brand>
     <Nav className="me-auto">
-      <Nav.Link href="/">소개</Nav.Link>
-      <Nav.Link href="/covid">코로나맵</Nav.Link>
+      {/* 
+          Nav.Link에서는 a 태그를 포함하기 때문에 새로고침을 막기 위해 e.preventDefault()
+          react-router-dom에서 Link를 가져와 링크를 변경해도 SPA 특성 유지하면서 새로고침은 안하게 함.
+      */}
+      <Nav.Link href="/" onClick={e => e.preventDefault()}><Link to="/">소개</Link></Nav.Link>
+      <Nav.Link href="/covid" onClick={e => e.preventDefault()}><Link to="/covid">코로나맵</Link></Nav.Link>
     </Nav>
      <Button onClick={() => dispatch(changeTheme(theme === "light"? "dark" : "light"))}>다크모드</Button>
     </Container>
@@ -48,9 +52,13 @@ function About() {
 
 function App() {
   return (
-    <Provider store={store}>
-        <Header />
+    <Provider store={store}> 
         <BrowserRouter>
+            {/* 
+              Header 내에서도 Link 컴포넌트를 사용하기 위해 BrowsetRouter에 포함.
+              Header 컴포넌트는 Route에 감싸주지 않았기 때문에 어떤 경로에도 고정으로 적용
+            */}
+            <Header />
             <Route path="/" exact>
                 <About />
             </Route>
