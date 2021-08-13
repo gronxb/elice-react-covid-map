@@ -192,7 +192,7 @@ function CovidMap() {
         <p>Loading...</p>
       ) : (
         <>
-          <p>총 확진자 수 : {allNum}</p>
+          <h2>총 확진자 수 : {allNum}</h2>
           <CovidInfo
             area={selectArea.area}
             date={covidData.updated_data}
